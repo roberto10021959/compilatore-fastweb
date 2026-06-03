@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compilatore Moduli Fastweb</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: #f4f6f9; }
+    .card { max-width: 520px; margin: 60px auto; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,.1); }
+    .card-header { background: #e60000; color: white; border-radius: 12px 12px 0 0; font-weight: 600; font-size: 1.1rem; }
+    .btn-modulo { border-radius: 8px; padding: 14px; font-size: 1rem; font-weight: 500; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="card-header text-center py-3">Compilatore Moduli Fastweb</div>
+    <div class="card-body p-4">
+
+      {% if not modulo %}
+        <!-- Selezione modulo -->
+        <p class="text-muted mb-3">Quale modulo vuoi compilare?</p>
+        <div class="d-grid gap-3">
+          <a href="/" class="btn btn-danger btn-modulo">📄 Modulo MNP (Portabilità)</a>
+          <a href="/cessione" class="btn btn-outline-danger btn-modulo">📄 Dichiarazione Cessione SIM</a>
+          <a href="/dichiarazione" class="btn btn-outline-danger btn-modulo">📄 Dichiarazione Conferma MNP</a>
+        </div>
+
+      {% else %}
+        <!-- Form ricerca P.IVA -->
+        {% if modulo == "cessione" %}
+          {% set action = "/cerca_cessione" %}
+          {% set titolo = "Cessione SIM" %}
+        {% elif modulo == "dichiarazione" %}
+          {% set action = "/cerca_dichiarazione" %}
+          {% set titolo = "Dichiarazione Conferma MNP" %}
+        {% else %}
+          {% set action = "/cerca" %}
+          {% set titolo = "Modulo MNP" %}
+        {% endif %}
+
+        <p class="text-muted mb-1 small">
+          <a href="/" class="text-decoration-none">← Torna alla selezione</a>
+        </p>
+        <h6 class="fw-semibold mb-3">{{ titolo }} — Cerca cliente</h6>
+
+        {% if errore %}
+          <div class="alert alert-danger">{{ errore }}</div>
+        {% endif %}
+
+        <form method="post" action="{{ action }}">
+          <label class="form-label fw-semibold">P.IVA del cliente</label>
+          <input type="text" name="piva" class="form-control form-control-lg mb-3"
+                 placeholder="es. 03034960835" autofocus required
+                 pattern="[0-9]{11}" title="11 cifre senza spazi">
+          <button type="submit" class="btn btn-danger w-100 btn-lg">Cerca cliente</button>
+        </form>
+      {% endif %}
+
+    </div>
+  </div>
+</body>
+</html>

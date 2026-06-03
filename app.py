@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from reportlab.pdfgen import canvas
 from pypdf import PdfReader, PdfWriter
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='.')
 
 CARTELLA     = os.path.dirname(os.path.abspath(__file__))
 PDF_MODULO   = os.path.join(CARTELLA, "modulo_mnp_fastweb.pdf")

@@ -177,6 +177,10 @@ def crea_pdf(cliente, sim_list, data_port_str):
 
 @app.route("/", methods=["GET"])
 def index():
+    return render_template("index.html")
+
+@app.route("/mnp", methods=["GET"])
+def mnp():
     return render_template("index.html", modulo="mnp")
 
 
